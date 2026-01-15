@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react"
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -15,7 +14,7 @@ export function HeroSection() {
           }
         })
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     )
 
     const elements = heroRef.current?.querySelectorAll(".animate-on-scroll")
@@ -25,31 +24,28 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster="https://res.cloudinary.com/dhtva9xag/video/upload/so_0/13ac717d-b9d4-4c51-a810-ba6deb6296bf_bwamdu.jpg"
           className="w-full h-full object-cover"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         >
           <source
-            src="https://res.cloudinary.com/dhtva9xag/video/upload/13ac717d-b9d4-4c51-a810-ba6deb6296bf_bwamdu.mp4"
+            src="https://res.cloudinary.com/dhtva9xag/video/upload/q_auto,f_auto,vc_h264,br_1500/13ac717d-b9d4-4c51-a810-ba6deb6296bf_bwamdu.mp4"
             type="video/mp4"
           />
-          {/* Fallback iframe if video element fails */}
-          <iframe
-            ref={iframeRef}
-            src="https://player.cloudinary.com/embed/?cloud_name=dhtva9xag&public_id=13ac717d-b9d4-4c51-a810-ba6deb6296bf_bwamdu&profile=cld-default&autoplay=true&muted=true&loop=true&controls=false&playsinline=true"
-            className="w-full h-full"
-            style={{ width: "100%", height: "100%", border: "none" }}
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            title="Background Video"
-          />
         </video>
+
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
       </div>
 
@@ -68,7 +64,9 @@ export function HeroSection() {
           className="animate-on-scroll opacity-0 mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty"
           style={{ animationDelay: "0.3s" }}
         >
-          We help Business Owners and Agencies replace manual processes with AI automation and high-conversion websites, so they grow without operational chaos and scale faster
+          We help Business Owners and Agencies replace manual processes with AI
+          automation and high-conversion websites, so they grow without
+          operational chaos and scale faster.
         </p>
       </div>
     </section>
