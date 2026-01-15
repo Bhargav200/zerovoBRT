@@ -1,4 +1,4 @@
-thisi sthe layout one edit t with tehrecent changes import type React from "react"
+import type React from "react"
 import type { Metadata } from "next"
 import { Outfit } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
