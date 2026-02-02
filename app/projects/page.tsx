@@ -39,19 +39,7 @@ const projects = [
       "Premium client acquisition improved significantly",
     ],
     link: "https://athernlabs.vercel.app/",
-
-
-
-
-
-
-
-
-
-
-
-
-  
+},
   {
     id: 3,
     title: "AI-Powered Student Career & Study Platform",
