@@ -4,6 +4,7 @@ import { CheckCircle2, ArrowRight } from "lucide-react"
 import { ScrollAnimationWrapper } from "@/components/scroll-animation-wrapper"
 import { FaqAccordion } from "@/components/faq-accordion"
 import { ConsultationWrapper } from "@/components/consultation-wrapper"
+import { JsonLd } from "@/components/json-ld"
 
 // This is now a Server Component by default (no "use client")
 
@@ -229,6 +230,20 @@ export function ServicePageLayout({ data }: { data: ServicePageProps }) {
                             </h2>
                             <FaqAccordion items={data.faq.questions} />
                         </div>
+                        <JsonLd
+                            data={{
+                                "@context": "https://schema.org",
+                                "@type": "FAQPage",
+                                mainEntity: data.faq.questions.map((q) => ({
+                                    "@type": "Question",
+                                    name: q.question,
+                                    acceptedAnswer: {
+                                        "@type": "Answer",
+                                        text: q.answer,
+                                    },
+                                }))
+                            }}
+                        />
                     </section>
                 )}
 

@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { MissionStatement } from "@/components/home/mission-statement"
 import { Users, Target, Lightbulb, Award } from "lucide-react"
+import { JsonLd } from "@/components/json-ld"
 
 const values = [
   {
@@ -52,13 +53,25 @@ export default function AboutPage() {
   return (
     <main ref={pageRef} className="min-h-screen">
       <Navigation />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Zerovo Labs",
+          url: "https://zerovolabs.in",
+          logo: "https://zerovolabs.in/logo.png",
+          description: "Zerovo Labs is an AI-powered digital solutions agency specializing in custom AI workflows, SaaS development, and smart business automation.",
+          foundingDate: "2025",
+        }}
+      />
 
       {/* Hero */}
       <section className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <span className="animate-on-scroll opacity-0 inline-block text-xs tracking-widest text-primary uppercase mb-4">
+          <span className="animate-on-scroll opacity-0 inline-block text-xs tracking-widest text-primary uppercase mb-2">
             About Us
           </span>
+          <p className="animate-on-scroll opacity-0 text-xs text-muted-foreground mb-4">Last updated: March 2026</p>
           <h1
             className="animate-on-scroll opacity-0 text-4xl md:text-6xl font-light tracking-tight"
             style={{ animationDelay: "0.1s" }}
