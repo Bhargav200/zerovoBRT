@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getCalApi } from "@calcom/embed-react"
+import Cal, { getCalApi } from "@calcom/embed-react"
 import { X } from "lucide-react"
 
 interface CalModalProps {
@@ -11,31 +11,17 @@ interface CalModalProps {
 
 export function CalModal({ isOpen, onClose }: CalModalProps) {
   const [calLoaded, setCalLoaded] = useState(false)
-  const [isPreloading, setIsPreloading] = useState(false)
 
-  // Preload Cal.com script as soon as component mounts
   useEffect(() => {
-    if (!calLoaded && !isPreloading) {
-      setIsPreloading(true)
-      ;(async () => {
-        try {
-          const cal = await getCalApi({ namespace: "30min" })
-          cal("ui", {
-            hideEventTypeDetails: false,
-            layout: "month_view",
-            styles: {
-              branding: { brandColor: "#38bdf8" },
-            },
-          })
-          setCalLoaded(true)
-        } catch (error) {
-          console.error("[v0] Cal.com API load error:", error)
-        } finally {
-          setIsPreloading(false)
-        }
-      })()
-    }
-  }, [calLoaded, isPreloading])
+    (async function () {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", {
+        styles: { branding: { brandColor: "#0ea5e9" } },
+        hideEventTypeDetails: false,
+        layout: "month_view"
+      });
+    })();
+  }, [])
 
   if (!isOpen) return null
 
@@ -50,7 +36,7 @@ export function CalModal({ isOpen, onClose }: CalModalProps) {
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-card hover:bg-card/80 transition-colors shadow-lg"
+          className="absolute top-4 right-4 z-[110] p-2 rounded-full bg-card hover:bg-card/80 transition-colors shadow-lg"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
@@ -66,15 +52,15 @@ export function CalModal({ isOpen, onClose }: CalModalProps) {
         )}
 
         <div className="w-full h-full p-4">
-          <iframe
-            src="https://cal.com/ravi-zerovo/30min?embed=true&theme=auto&layout=month_view"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="eager"
-            title="Schedule a consultation"
+          <Cal
+            namespace="30min"
+            calLink="ravi-zerovo/30min"
+            style={{ width: "100%", height: "100%", overflow: "scroll" }}
+            config={{ layout: 'month_view', theme: 'auto' }}
+            onReady={() => {
+              // Now we accurately know when the calendar has fully loaded
+              setCalLoaded(true)
+            }}
           />
         </div>
       </div>

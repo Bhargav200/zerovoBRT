@@ -1,6 +1,8 @@
 "use server"
 
 import { Resend } from "resend"
+import { GoogleSpreadsheet } from 'google-spreadsheet'
+import { JWT } from 'google-auth-library'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -17,6 +19,41 @@ export async function sendContactEmail(formData: FormData) {
   }
 
   try {
+    // 1. Google Sheets Integration
+    try {
+      if (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_SHEET_ID) {
+        // Initialize auth
+        const serviceAccountAuth = new JWT({
+          email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          // Handle newlines formatting in .env files gracefully
+          key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+
+        const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, serviceAccountAuth);
+        await doc.loadInfo(); 
+        const sheet = doc.sheetsByIndex[0];
+        
+        // Append row
+        // IMPORTANT: The headers in the Google Sheet MUST match these keys exactly!
+        await sheet.addRow({
+          Name: name,
+          Email: email,
+          Company: company || 'N/A',
+          Service: service || 'N/A',
+          Message: message,
+          Date: new Date().toISOString()
+        });
+      } else {
+         console.warn("[v0] Google Sheets integration skipped - missing environment variables.");
+      }
+    } catch (sheetError) {
+      console.error("[v0] Error appending to Google Sheets:", sheetError);
+      // Optional: you could return an error here if you want it to fail fully, 
+      // but leaving it silent ensures the backup email is still sent.
+    }
+
+    // 2. Email Notification
     // Once a domain is verified, you can change this to process.env.CONTACT_EMAIL
     const recipientEmail = "quantumflux.tech01@gmail.com"
 
