@@ -16,7 +16,7 @@ const _outfit = Outfit({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zerovolabs.in"),
-  title: "Zerovo Labs | Premium AI-Powered Digital Solutions",
+  title: "Zerovo Labs | AI Automation & Custom Software Development",
   description:
     "Zerovo Labs specializes in AI-powered web development, AI automation, custom AI solutions, and SaaS development. Transform your business with cutting-edge technology.",
   generator: "v0.app",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Zerovo Labs | Premium AI-Powered Digital Solutions",
+    title: "Zerovo Labs | AI Automation & Custom Software Development",
     description: "Zerovo Labs specializes in AI-powered web development, AI automation, custom AI solutions, and SaaS development.",
     url: "https://zerovolabs.in",
     siteName: "Zerovo Labs",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zerovo Labs | Premium AI-Powered Digital Solutions",
+    title: "Zerovo Labs | AI Automation & Custom Software Development",
     description: "Zerovo Labs specializes in AI-powered web development, AI automation, custom AI solutions, and SaaS development.",
     images: ["/logo.png"],
   },
@@ -84,10 +84,11 @@ export default function RootLayout({
             "name": "Zerovo Labs",
             "url": "https://zerovolabs.in",
             "logo": "https://zerovolabs.in/favicon.svg",
-            "description": "Premium AI-Powered Digital Solutions specializing in web development, automation, and custom AI.",
+            "description": "Zerovo Labs is a premier AI automation and custom software development agency dedicated to helping businesses automate manual workflows and build intelligent, AI-powered digital products.",
             "sameAs": [
+              "https://linkedin.com/company/zerovolabs",
               "https://twitter.com/zerovolabs",
-              "https://linkedin.com/company/zerovolabs"
+              "https://instagram.com/zerovolabs"
             ]
           }}
         />

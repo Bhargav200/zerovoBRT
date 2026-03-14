@@ -68,7 +68,7 @@ export function HeroSection() {
           className="animate-on-scroll opacity-0 mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty"
           style={{ animationDelay: "0.3s" }}
         >
-          We help Business Owners and Agencies replace manual processes with AI automation and high-conversion websites, so they grow without operational chaos and scale faster
+          Zerovo Labs is a premium AI automation and custom software development agency helping businesses successfully automate workflows and build scalable, AI-powered digital products.
         </p>
       </div>
     </section>

@@ -10,6 +10,7 @@ interface CalModalProps {
 }
 
 export function CalModal({ isOpen, onClose }: CalModalProps) {
+
   const [calLoaded, setCalLoaded] = useState(false)
 
   useEffect(() => {
@@ -20,7 +21,23 @@ export function CalModal({ isOpen, onClose }: CalModalProps) {
         hideEventTypeDetails: false,
         layout: "month_view"
       });
+
+      // Successfully loaded event from the embed
+      cal("on", {
+        action: "*",
+        callback: (e) => {
+          setCalLoaded(true);
+        }
+      });
     })();
+
+    // Safety fallback: if CORS blocks the iframe messages, forcibly hide the loader
+    // after 3 seconds so the user is never stuck.
+    const timer = setTimeout(() => {
+      setCalLoaded(true)
+    }, 3000)
+
+    return () => clearTimeout(timer)
   }, [])
 
   if (!isOpen) return null
@@ -43,10 +60,12 @@ export function CalModal({ isOpen, onClose }: CalModalProps) {
         </button>
 
         {!calLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/90 z-20">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm text-muted-foreground">Loading calendar...</p>
+          <div className="absolute inset-0 flex items-center justify-center bg-background/90 z-20 rounded-lg">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin shadow-lg" />
+              <p className="text-sm font-medium text-muted-foreground animate-pulse">
+                Setting up your consultation...
+              </p>
             </div>
           </div>
         )}
@@ -57,10 +76,6 @@ export function CalModal({ isOpen, onClose }: CalModalProps) {
             calLink="ravi-zerovo/30min"
             style={{ width: "100%", height: "100%", overflow: "scroll" }}
             config={{ layout: 'month_view', theme: 'auto' }}
-            onReady={() => {
-              // Now we accurately know when the calendar has fully loaded
-              setCalLoaded(true)
-            }}
           />
         </div>
       </div>

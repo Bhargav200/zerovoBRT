@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const routes = [
         "",
         "/about",
+        "/about-zerovolabs",
         "/contact",
         "/projects",
         "/services",

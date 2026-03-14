@@ -7,6 +7,7 @@ import { Logo } from "./logo"
 const footerLinks = {
   company: [
     { href: "/about", label: "About" },
+    { href: "/about-zerovolabs", label: "About Zerovo Labs" },
     { href: "/services", label: "Services" },
     { href: "/projects", label: "Projects" },
     { href: "/contact", label: "Contact" },
